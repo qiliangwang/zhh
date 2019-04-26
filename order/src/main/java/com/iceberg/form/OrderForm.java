@@ -1,7 +1,10 @@
 package com.iceberg.form;
 
+import com.iceberg.dataobject.OrderDetail;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.List;
 
 /**
  * @author wangql
@@ -37,5 +40,5 @@ public class OrderForm {
      * 购物车
      */
     @NotEmpty(message = "购物车不能为空")
-    private String items;
+    private List<OrderDetail> items;
 }

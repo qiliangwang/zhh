@@ -26,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,6 +77,8 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
             orderDetail.setOrderId(orderId);
             BeanUtils.copyProperties(productInfo, orderDetail);
+            orderDetail.setCreateTime(new Date());
+            orderDetail.setUpdateTime(new Date());
             orderDetailRepository.save(orderDetail);
 
 //            CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
@@ -90,6 +93,8 @@ public class OrderServiceImpl implements OrderService {
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
+        orderMaster.setCreateTime(new Date());
+        orderMaster.setUpdateTime(new Date());
         orderMasterRepository.save(orderMaster);
 
         //4. 扣库存

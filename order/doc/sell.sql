@@ -1,3 +1,5 @@
+drop schema sell;
+
 create database if not exists sell;
 
 use sell;
@@ -60,13 +62,13 @@ create table `order_detail` (
 
 -- 卖家(登录后台使用, 卖家登录之后可能直接采用微信扫码登录，不使用账号密码)
 create table `seller_info` (
-    `id` varchar(32) not null,
+    `seller_id` varchar(32) not null,
     `username` varchar(32) not null,
     `password` varchar(32) not null,
     `openid` varchar(64) not null comment '微信openid',
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
-    primary key (`id`)
+    primary key (`seller_id`)
 ) comment '卖家信息表';
 
 INSERT INTO sell.order_detail (detail_id, order_id, product_id, product_name, product_price, product_quantity, product_icon, create_time, update_time) VALUES ('1539319025769379468', '1539319025718424064', '1234568', '燕麦牛奶', 2.30, 1, 'http://yyyyyyyy.jpg', '2018-10-12 12:37:05', '2018-10-12 12:37:05');
@@ -100,4 +102,4 @@ INSERT INTO sell.product_info (product_id, product_name, product_price, product_
 INSERT INTO sell.product_info (product_id, product_name, product_price, product_stock, product_description, product_icon, product_status, category_type, create_time, update_time) VALUES ('1234568', '燕麦牛奶', 2.30, 99, '很好喝的燕麦牛奶', 'http://yyyyyyyy.jpg', 0, 1, '2018-10-12 00:00:00', '2019-04-23 23:06:15');
 INSERT INTO sell.product_info (product_id, product_name, product_price, product_stock, product_description, product_icon, product_status, category_type, create_time, update_time) VALUES ('123457', '黑米粥', 2.30, 44, '很好喝的粥', 'http://xxxxx.jpg', 0, 2, '2018-10-12 00:00:00', '2019-04-23 23:06:15');
 
-INSERT INTO sell.seller_info (id, username, password, openid, create_time, update_time) VALUES ('1', 'wangql', '123456', '', '2019-04-24 08:43:52', '2019-04-24 08:44:00');
+INSERT INTO sell.seller_info (seller_id, username, password, openid, create_time, update_time) VALUES ('1', 'wangql', '123456', '', '2019-04-24 08:43:52', '2019-04-24 08:44:00');

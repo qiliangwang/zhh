@@ -2,16 +2,20 @@ package com.iceberg.dataobject;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author wangql
  */
 @Entity
 @Data
+@DynamicUpdate
+@DynamicInsert
 public class OrderDetail {
 
     @Id
@@ -34,4 +38,10 @@ public class OrderDetail {
 
     /** 商品小图. */
     private String productIcon;
+
+    /** 创建时间. */
+    private Date createTime;
+
+    /** 更新时间. */
+    private Date updateTime;
 }
