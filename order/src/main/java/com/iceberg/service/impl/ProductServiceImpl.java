@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductInfo save(ProductInfo productInfo) {
+        if (productInfo.getProductId() == null) {
+            productInfo.setCreateTime(new Date());
+        }
+        productInfo.setUpdateTime(new Date());
         return repository.save(productInfo);
     }
 

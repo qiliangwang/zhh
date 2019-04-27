@@ -6,6 +6,7 @@ import com.iceberg.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ProductCategory save(ProductCategory productCategory) {
+        if (productCategory.getCategoryId() == null) {
+            productCategory.setCreateTime(new Date());
+        }
+        productCategory.setUpdateTime(new Date());
         return repository.save(productCategory);
     }
 }

@@ -59,8 +59,6 @@ public class OrderServiceImpl implements OrderService {
         String orderId = KeyUtil.genUniqueKey();
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
 
-//        List<CartDTO> cartDTOList = new ArrayList<>();
-
         //1. 查询商品（数量, 价格）
         for (OrderDetail orderDetail: orderDTO.getOrderDetailList()) {
             ProductInfo productInfo =  productService.findOne(orderDetail.getProductId());
@@ -80,11 +78,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setCreateTime(new Date());
             orderDetail.setUpdateTime(new Date());
             orderDetailRepository.save(orderDetail);
-
-//            CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
-//            cartDTOList.add(cartDTO);
         }
-
 
         //3. 写入订单数据库（orderMaster和orderDetail）
         OrderMaster orderMaster = new OrderMaster();
@@ -152,6 +146,7 @@ public class OrderServiceImpl implements OrderService {
         //修改订单状态
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         BeanUtils.copyProperties(orderDTO, orderMaster);
+        orderMaster.setUpdateTime(new Date());
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
             log.error("【取消订单】更新失败, orderMaster={}", orderMaster);
@@ -194,9 +189,6 @@ public class OrderServiceImpl implements OrderService {
             log.error("【完结订单】更新失败, orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
-
-        //推送微信模版消息
-//        pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }

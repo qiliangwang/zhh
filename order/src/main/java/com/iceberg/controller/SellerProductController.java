@@ -85,7 +85,7 @@ public class SellerProductController {
      */
     @RequestMapping("/off_sale")
     public ModelAndView offSale(@RequestParam("productId") String productId,
-                               Map<String, Object> map) {
+                                Map<String, Object> map) {
         try {
             productService.offSale(productId);
         } catch (SellException e) {
@@ -100,7 +100,7 @@ public class SellerProductController {
 
     @GetMapping("/index")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId,
-                      Map<String, Object> map) {
+                              Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productService.findOne(productId);
             map.put("productInfo", productInfo);
