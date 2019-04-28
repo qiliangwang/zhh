@@ -1,28 +1,24 @@
 package com.iceberg.controller;
 
+import com.iceberg.VO.ResultVO;
+import com.iceberg.dataobject.ProductCategory;
 import com.iceberg.exception.SellException;
 import com.iceberg.form.CategoryForm;
 import com.iceberg.service.CategoryService;
-import com.iceberg.dataobject.ProductCategory;
+import com.iceberg.utils.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 卖家类目
  * @author wangql
  */
-@Controller
+@RestController
 @RequestMapping("/seller/category")
 public class SellerCategoryController {
 
@@ -31,64 +27,58 @@ public class SellerCategoryController {
 
     /**
      * 类目列表
-     * @param map
      * @return
      */
     @GetMapping("/list")
-    public ModelAndView list(Map<String, Object> map) {
+    public ResultVO list() {
         List<ProductCategory> categoryList = categoryService.findAll();
-        map.put("categoryList", categoryList);
-        return new ModelAndView("category/list", map);
+        return ResultVOUtil.success(categoryList);
     }
 
     /**
      * 展示
      * @param categoryId
-     * @param map
      * @return
      */
     @GetMapping("/index")
-    public ModelAndView index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
-                              Map<String, Object> map) {
+    public ResultVO index(@RequestParam(value = "categoryId", required = false) Integer categoryId) {
         if (categoryId != null) {
             ProductCategory productCategory = categoryService.findOne(categoryId);
-            map.put("category", productCategory);
+            if (productCategory == null) {
+                return ResultVOUtil.error(1, "categoryId非法");
+            }
+            return ResultVOUtil.success(productCategory);
+        } else {
+            return ResultVOUtil.error(1, "categoryId必填");
         }
-
-        return new ModelAndView("category/index", map);
     }
 
     /**
      * 保存/更新
      * @param form
      * @param bindingResult
-     * @param map
      * @return
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid CategoryForm form,
-                             BindingResult bindingResult,
-                             Map<String, Object> map) {
+    public ResultVO save(@Valid CategoryForm form,
+                             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            map.put("msg", bindingResult.getFieldError().getDefaultMessage());
-            map.put("url", "/sell/seller/category/index");
-            return new ModelAndView("common/error", map);
+            return ResultVOUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
 
         ProductCategory productCategory = new ProductCategory();
         try {
             if (form.getCategoryId() != null) {
                 productCategory = categoryService.findOne(form.getCategoryId());
+                if (productCategory == null) {
+                    return ResultVOUtil.error(1, "categoryId非法");
+                }
             }
             BeanUtils.copyProperties(form, productCategory);
             categoryService.save(productCategory);
         } catch (SellException e) {
-            map.put("msg", e.getMessage());
-            map.put("url", "/sell/seller/category/index");
-            return new ModelAndView("common/error", map);
+            return ResultVOUtil.error(1, e.getMessage());
         }
-
-        map.put("url", "/sell/seller/category/list");
-        return new ModelAndView("common/success", map);
+        return ResultVOUtil.success();
     }
 }

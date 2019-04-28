@@ -33,7 +33,7 @@ public class SellerUserController {
             session.setAttribute(LoginConst.CURRENT_USER, user);
             return ResultVOUtil.success(user);
         } else {
-            return ResultVOUtil.error(500, "mock失败");
+            return ResultVOUtil.error(1, "mock失败");
         }
     }
 
@@ -46,7 +46,7 @@ public class SellerUserController {
             session.setAttribute(LoginConst.CURRENT_USER, user);
             return ResultVOUtil.success(user);
         } else {
-            return ResultVOUtil.error(500, "用户不存在");
+            return ResultVOUtil.error(1, "用户不存在");
         }
     }
 
