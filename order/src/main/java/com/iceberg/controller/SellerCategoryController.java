@@ -40,7 +40,7 @@ public class SellerCategoryController {
      * @param categoryId
      * @return
      */
-    @GetMapping("/index")
+    @GetMapping("/detail")
     public ResultVO index(@RequestParam(value = "categoryId", required = false) Integer categoryId) {
         if (categoryId != null) {
             ProductCategory productCategory = categoryService.findOne(categoryId);
