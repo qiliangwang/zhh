@@ -1,0 +1,28 @@
+<view class='food-container'>
+  <view class='food-box'>
+   <view wx:for="{{foods}}" class='food-item'>
+    <text>{{item.name}}</text>
+    <text>X{{item.num}}</text>
+   </view>
+   <view class='totalprice'>
+     <text>总价：{{totalPrice}}</text>
+   </view>
+   <view class='user-info'>
+    <view class='info-item'>
+      <text class='info-text'>姓名：</text>
+      <input type='text' bindinput="bindNameInput" placeholder='请输入姓名'></input>
+    </view>
+    <view  class='info-item'>
+      <text class='info-text'>联系方式：</text>
+      <input type='number'  bindinput="bindPhoneInput" placeholder='请输入联系方式'></input>
+    </view>
+    <view  class='info-item'>
+      <text class='info-text'>店铺地址：</text>
+      <input type='text' value='{{address}}' disabled></input>
+    </view>
+   </view>
+  </view>
+  <view  class='buy-btn' bindtap='createOrder'>
+    <text>立即下单</text>
+  </view>
+</view>

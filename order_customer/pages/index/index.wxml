@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<view class="container" class='container'>
+  <view class='logo'>
+    <image src='/images/logo.png'></image>
+  </view>
+  <text class='btn' bindtap='getmenu'>进店</text>
+</view>

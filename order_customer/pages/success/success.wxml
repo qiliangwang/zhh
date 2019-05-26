@@ -1,0 +1,4 @@
+<view class='success-box'>
+  <icon size='66' type='success' color='rgb(32, 160, 255)'></icon>
+  <text>下单成功 请稍等</text>
+</view>

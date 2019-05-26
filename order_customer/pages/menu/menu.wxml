@@ -1,0 +1,24 @@
+<view class='menu'>
+  <view class='menubar'>
+    <view bindtap='changeKind' data-index="{{index}}" class='{{index === sortPos ? "active": ""}}' wx:for="{{caterories}}">{{item}}</view>
+  </view>
+  <view class='menu-box'>
+    <view class='menu-item' wx:for="{{menuList}}">
+      <view class='menu-img'>
+        <image src="/images/menu.jpg"></image>
+      </view>
+      <text class='menu-name'>{{item.name}}</text>
+      <view class='menu-foot'>
+        <text class='menu-price'>￥{{item.price}}</text>
+        <view class='menu-count'>
+          <text wx-if="{{item.num > 0}}" class='menu-icon' data-index="{{index}}" bindtap="reduce">-</text>
+          <text wx-if="{{item.num > 0}}" class='menu-num'>{{item.num}}</text>
+          <text class='menu-icon' bindtap='add' data-index="{{index}}">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+   <view class='finish' bindtap='finish'>
+      <text class='finish-text'>选好了</text>
+    </view>
+</view>

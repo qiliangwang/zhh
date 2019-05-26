@@ -1,0 +1,12 @@
+.success-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.success-box icon{
+  margin: 30px 0 40px 0;
+}
+.success-box text{
+  font-size: 20px;
+  color: #000;
+}
